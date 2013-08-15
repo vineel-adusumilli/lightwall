@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,usr-scalable=no" />
     <title>lightwall</title>
+    <script type="text/javascript" src="/static/script.js"></script>
   </head>
   <body>
-    <form action="/" method="post">
-      r: <input type="text" name="r" value="{{.R}}"/>
-      g: <input type="text" name="g" value="{{.G}}"/>
-      b: <input type="text" name="b" value="{{.B}}"/>
-      <input type="submit" name="Submit" />
-    </form>
+    r: <input type="range" id="r" min="0" max="255" step="1" value="{{.R}}"/><br /><br />
+    g: <input type="range" id="g" min="0" max="255" step="1" value="{{.G}}"/><br /><br />
+    b: <input type="range" id="b" min="0" max="255" step="1" value="{{.B}}"/><br /><br />
   </body>
 </html>
 
