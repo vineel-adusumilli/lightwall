@@ -11,6 +11,8 @@ Usage
 Running lightwall is as easy as:
 
 ```bash
+go get github.com/tarm/goserial
+go get code.google.com/p/go.net/websocket 
 go build
 ./lightwall
 ```

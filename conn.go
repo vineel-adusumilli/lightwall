@@ -6,6 +6,7 @@ import (
   "fmt"
   "strings"
   "strconv"
+  "time"
 
   "code.google.com/p/go.net/websocket"
 )
@@ -16,13 +17,31 @@ type connection struct {
 
   // Buffered channel of outbound messages.
   send chan string
+
+  // Time to wait before closing connection after inactivity
+  timeout time.Duration
 }
 
 var color = make([]byte, 3)
 
 func (c *connection) reader() {
   message := make([]byte, 1024)
+
+  var timer *time.Timer
+  if c.timeout > 0 {
+    timer = time.NewTimer(c.timeout)
+  }
+
   for {
+    if c.timeout > 0 {
+      // check if we've timed out
+      select {
+      case <-timer.C:
+        return
+      default:
+      }
+    }
+
     nr, err := c.ws.Read(message)
     if err != nil {
       break
@@ -36,6 +55,11 @@ func (c *connection) reader() {
         }
         color[i] = byte(c)
       }
+
+      if c.timeout > 0 {
+        timer.Reset(c.timeout)
+      }
+
       h.broadcast <- fmt.Sprintf("%d,%d,%d", color[0], color[1], color[2])
       lightQueue <- color
     }
@@ -72,7 +96,12 @@ func websocketServer(ws *websocket.Conn) {
     return
   }
 
-  c := &connection{send: make(chan string, 256), ws: ws}
+  // set connection timeout at 60 seconds
+  c := &connection{
+    send: make(chan string, 256),
+    ws: ws,
+    timeout: 60 * time.Second,
+  }
   h.register <- c
   defer func() {
     h.unregister <- c
