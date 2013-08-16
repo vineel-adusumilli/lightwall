@@ -2,7 +2,6 @@ package main
 
 import (
   "fmt"
-  "strconv"
   "strings"
 
   "net/http"
@@ -29,7 +28,6 @@ func loadTemplates() {
   }
 
   // actually load the templates
-  fmt.Printf("Template files: %v\n", templateFiles)
   templates = template.Must(template.ParseFiles(templateFiles...))
 
   for _, t := range templateFiles {
@@ -50,30 +48,10 @@ func index(w http.ResponseWriter, r *http.Request) {
   }
 }
 
-func websocketServer(ws *websocket.Conn) {
-  message := make([]byte, 1024)
-  for {
-    nr, err := ws.Read(message)
-    if err != nil {
-      break
-    }
-    if nr > 0 {
-      rgb := strings.Split(string(message[:nr]), ",")
-      for i := range color {
-        c, err := strconv.Atoi(rgb[i])
-        if err != nil {
-          color[i] = 0
-        }
-        color[i] = byte(c)
-      }
-      lightQueue <- color
-    }
-  }
-}
-
 func main() {
   loadSerial()
   loadTemplates()
+  go h.run()
 
   fmt.Println("Opening server on localhost:8080")
   http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
