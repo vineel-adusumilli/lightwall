@@ -18,6 +18,8 @@ type connection struct {
   send chan string
 }
 
+var color = make([]byte, 3)
+
 func (c *connection) reader() {
   message := make([]byte, 1024)
   for {
@@ -51,11 +53,38 @@ func (c *connection) writer() {
   c.ws.Close()
 }
 
+// semaphore to limit max connections 
+var sem chan bool
+
+// initialize the semaphore
+func initSemaphore(maxConnections int) {
+  sem = make(chan bool, maxConnections)
+  for i := 0; i < maxConnections; i++ {
+    sem <- true
+  }
+}
+
 func websocketServer(ws *websocket.Conn) {
+  // make sure there's an open connection first, otherwise disconnect
+  select {
+  case <-sem:
+  default:
+    return
+  }
+
   c := &connection{send: make(chan string, 256), ws: ws}
   h.register <- c
-  defer func() { h.unregister <- c }()
+  defer func() {
+    h.unregister <- c
+    // return one connection to the semaphore
+    // but don't block if it's already full for some reason
+    select {
+    case sem <- true:
+    }
+  }()
   go c.writer()
+  // tell client that server is ready to accept rgb data
+  c.send <- "ready";
   c.reader()
 }
 

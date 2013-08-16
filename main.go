@@ -39,8 +39,6 @@ type Color struct {
   R, G, B byte
 }
 
-var color = make([]byte, 3)
-
 func index(w http.ResponseWriter, r *http.Request) {
   err := templates.ExecuteTemplate(w, "index.html", Color{color[0], color[1], color[2]})
   if err != nil {
@@ -51,6 +49,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 func main() {
   loadSerial()
   loadTemplates()
+  // set max connections to 10
+  initSemaphore(10)
   go h.run()
 
   fmt.Println("Opening server on localhost:8080")
