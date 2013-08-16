@@ -31,7 +31,7 @@ func loadSerial() {
   }
 
   // open connection to Arduino
-  c := &serial.Config{Name: "/dev/" + port, Baud: 9600}
+  c := &serial.Config{Name: "/dev/" + port, Baud: 115200}
   s, err = serial.OpenPort(c)
   if err != nil {
     panic("Unable to open serial port!");
