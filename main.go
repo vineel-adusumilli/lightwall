@@ -53,7 +53,10 @@ func index(w http.ResponseWriter, r *http.Request) {
 func websocketServer(ws *websocket.Conn) {
   message := make([]byte, 1024)
   for {
-    nr, _ := ws.Read(message)
+    nr, err := ws.Read(message)
+    if err != nil {
+      break
+    }
     if nr > 0 {
       rgb := strings.Split(string(message[:nr]), ",")
       for i := range color {
