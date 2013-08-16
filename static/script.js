@@ -18,9 +18,13 @@ window.onload = function() {
   };
 
   socket.onclose = function() {
-    if (!ready) {
+    if (ready) {
+      alert("Connection to the server timed out!");
+    } else {
       alert("The server has already accepted the maximum number of connections!");
     }
+
+    ready = false;
   };
 
   r.onchange = g.onchange = b.onchange = update;

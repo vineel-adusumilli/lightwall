@@ -14,14 +14,14 @@ var readySerial = make(chan bool)
 var lightQueue = make(chan []byte, 100)
 
 func loadSerial() {
-  // find the serial port the Arduino is on. It's usually /dev/ttyACM*
+  // find the serial port the Arduino is on. It's usually /dev/ttyACM* or /dev/ttyUSB*
   files, err := ioutil.ReadDir("/dev")
   if err != nil {
     panic("Unable to list /dev!")
   }
   port := ""
   for _, f := range files {
-    if strings.HasPrefix(f.Name(), "ttyUSB") {
+    if strings.HasPrefix(f.Name(), "ttyUSB") || strings.HasPrefix(f.Name(), "ttyACM") {
       port = f.Name()
       break
     }
