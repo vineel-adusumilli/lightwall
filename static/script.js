@@ -10,9 +10,14 @@ window.onload = function() {
 
   socket.onclose = function() {
     if (ready) {
-      alert("Connection to the server timed out!");
+      $("#swatch").hide();
+      $("#main").text("Connection to the server has timed out! Try reloading.");
     } else {
-      alert("The server has already accepted the maximum number of connections!");
+      $("#swatch").hide();
+      $("#main").text("The server has already accepted the maximum number of connections! Reloading in 5 seconds...");
+      setTimeout(function() {
+        location.reload();
+      }, 5000);
     }
 
     ready = false;

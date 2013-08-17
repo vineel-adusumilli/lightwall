@@ -13,19 +13,24 @@ body {
   margin: 5px;
 }
 
-#header, #nav, #main {
+#header img {
+  max-width: 20%;
+  width: 90px;
+}
+
+#header, #nav {
   text-align: center;
 }
 
 #nav {
-  height: 90px;
+  height: 60px;
   position: relative;
   margin: 0 5px;
 }
 
 #nav img {
   width: 25%;
-  height: 70px;
+  height: 40px;
   float: left;
   padding: 10px 0;
 }
