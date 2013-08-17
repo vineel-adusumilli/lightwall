@@ -4,12 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,usr-scalable=no" />
     <title>lightwall</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/colorpicker.js"></script>
     <script type="text/javascript" src="/static/script.js"></script>
   </head>
   <body>
-    r: <input type="range" id="r" min="0" max="255" step="1" value="{{.R}}"/><br /><br />
-    g: <input type="range" id="g" min="0" max="255" step="1" value="{{.G}}"/><br /><br />
-    b: <input type="range" id="b" min="0" max="255" step="1" value="{{.B}}"/><br /><br />
+    <div id="header">
+      <img src="/static/images/logo.png" alt="TF Logo" />
+    </div>
+    <div id="nav">
+      <a href="#">
+        <img src="/static/images/fire.svg" id="fire" alt="Fire" />
+      </a>
+      <a href="#">
+        <img src="/static/images/ice.svg" id="ice" alt="Ice" />
+      </a>
+      <a href="#">
+        <img src="/static/images/record.svg" id="record" alt="Record" />
+      </a>
+      <a href="#">
+        <img src="/static/images/stop.svg" id="stop" alt="Stop" />
+      </a>
+      <a href="#">
+        <img src="/static/images/play.svg" id="play" alt="Play" />
+      </a>
+    </div>
+    <div id="main">
+      <canvas id="swatch"></canvas>
+    </div>
   </body>
 </html>
 

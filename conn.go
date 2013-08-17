@@ -112,8 +112,8 @@ func websocketServer(ws *websocket.Conn) {
     }
   }()
   go c.writer()
-  // tell client that server is ready to accept rgb data
-  c.send <- "ready";
+  // send the client the current rgb value
+  c.send <- fmt.Sprintf("%d,%d,%d", color[0], color[1], color[2])
   c.reader()
 }
 

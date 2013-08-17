@@ -35,12 +35,8 @@ func loadTemplates() {
   }
 }
 
-type Color struct {
-  R, G, B byte
-}
-
 func index(w http.ResponseWriter, r *http.Request) {
-  err := templates.ExecuteTemplate(w, "index.html", Color{color[0], color[1], color[2]})
+  err := templates.ExecuteTemplate(w, "index.html", nil)
   if err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
   }

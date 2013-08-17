@@ -1,1 +1,76 @@
-t:q
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  position: relative;
+}
+
+#header {
+  padding: 20px;
+  margin: 5px;
+}
+
+#header, #nav, #main {
+  text-align: center;
+}
+
+#nav {
+  height: 90px;
+  position: relative;
+  margin: 0 5px;
+}
+
+#nav img {
+  width: 25%;
+  height: 70px;
+  float: left;
+  padding: 10px 0;
+}
+
+#fire {
+  background: #E25822;
+}
+
+#fire:hover {
+  background: #D24812;
+}
+
+#ice {
+  background: #6699CC;
+}
+
+#ice:hover {
+  background: #5689BC;
+}
+
+#record, #stop {
+  background: #B22222;
+}
+
+#stop {
+  display: none;
+}
+
+#record:hover, #stop:hover {
+  background: #A21212;
+}
+
+#play {
+  background: #74C365;
+}
+
+#play:hover {
+  background: #67B355;
+}
+
+#main { 
+  padding: 5px 5px 0 5px;
+}
+
+#swatch {
+  width: 100%;
+}
+
